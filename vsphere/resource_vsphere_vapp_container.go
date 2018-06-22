@@ -286,7 +286,7 @@ func resourceVSphereVAppContainerDelete(d *schema.ResourceData, meta interface{}
 }
 
 // resourceVSphereVAppContainerIDString prints a friendly string for the
-// vsphere_virtual_machine resource.
+// vsphere_vapp_container resource.
 func resourceVSphereVAppContainerIDString(d structure.ResourceIDStringer) string {
 	return structure.ResourceIDString(d, resourceVSphereVAppContainerName)
 }
@@ -334,16 +334,16 @@ func resourceVSphereVAppContainerClient(meta interface{}) (*govmomi.Client, erro
 func resourceVSphereVAppContainerValidateEmpty(va *object.VirtualApp) error {
 	ne, err := vappcontainer.HasChildren(va)
 	if err != nil {
-		return fmt.Errorf("error checking contents of resource pool: %s", err)
+		return fmt.Errorf("error checking contents of vApp container: %s", err)
 	}
 	if ne {
-		return fmt.Errorf("resource pool %q still has children resources. Please move or remove all items before deleting", va.InventoryPath)
+		return fmt.Errorf("vApp container %q still has children resources. Please move or remove all items before deleting", va.InventoryPath)
 	}
 	return nil
 }
 
 // resourceVSphereVAppContainerApplyTags processes the tags step for both create
-// and update for vsphere_resource_pool.
+// and update for vsphere_vapp_container.
 func resourceVSphereVAppContainerApplyTags(d *schema.ResourceData, meta interface{}, va *object.VirtualApp) error {
 	tagsClient, err := tagsClientIfDefined(d, meta)
 	if err != nil {

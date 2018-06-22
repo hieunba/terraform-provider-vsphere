@@ -27,7 +27,7 @@ func FromPath(client *govmomi.Client, name string, dc *object.Datacenter) (*obje
 
 // FromID locates a VirtualApp by its managed object reference ID.
 func FromID(client *govmomi.Client, id string) (*object.VirtualApp, error) {
-	log.Printf("[DEBUG] Locating resource pool with ID %s", id)
+	log.Printf("[DEBUG] Locating vApp container with ID %s", id)
 	finder := find.NewFinder(client.Client, false)
 
 	ref := types.ManagedObjectReference{
